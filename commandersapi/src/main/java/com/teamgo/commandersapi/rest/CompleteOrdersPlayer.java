@@ -35,9 +35,10 @@ public class CompleteOrdersPlayer {
 
         if (SPECIAL_ALL.equals(eventId) || event.get__id().equals(eventId)) {
             if (complete) {
-                eventManager.completeCurrentJob(p, event);
-
-                throw new SuccessFullyRemoved();
+                if(eventManager.completeCurrentJob(p, event))
+                    throw new SuccessFullyRemoved();
+                else
+                    throw new IllegalStateException("Expected to complete the job");
             }else{
                 throw new VerifiedNonCompleteCall();
             }

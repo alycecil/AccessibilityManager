@@ -37,7 +37,7 @@ public class EventManager {
         return null;
     }
 
-    public void completeCurrentJob(Player p, Event event) {
-        currentJob.remove(p, event);
+    public boolean completeCurrentJob(Player p, Event event) {
+        return currentJob.remove(p, event);
     }
 }
