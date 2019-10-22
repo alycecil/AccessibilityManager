@@ -5,6 +5,7 @@ import com.teamgo.core.engine.events.Event;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.Map;
 
 @Service
@@ -12,7 +13,7 @@ public class EventManager {
     @Autowired
     PlayerManager playerManager;
 
-    Map<Player, Event> currentJob;
+    Map<Player, Event> currentJob = new HashMap<>();
 
     public Event emitEvent(Player player) {
         Event event = getCurrentJob(player);

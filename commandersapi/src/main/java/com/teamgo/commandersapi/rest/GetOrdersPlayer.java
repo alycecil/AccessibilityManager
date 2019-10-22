@@ -9,8 +9,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.logging.Logger;
+
 @RestController
 public class GetOrdersPlayer {
+    private Logger logger = Logger.getLogger(this.getClass().getName());
 
     @Autowired
     PlayerManager playerManager;
@@ -30,6 +33,8 @@ public class GetOrdersPlayer {
 
         if (e == null) {
             throw new NothingNew();
+        }else{
+            logger.info("Assigning "+playerName+" event "+e);
         }
 
         return e;

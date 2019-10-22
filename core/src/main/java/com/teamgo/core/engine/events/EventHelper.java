@@ -6,9 +6,23 @@ import com.teamgo.core.bo.statics.Direction;
 import com.teamgo.core.bo.statics.TeleportDestinations;
 
 public class EventHelper {
-    public static Event checkStatus(Player player) {
+    public static Event checkStatusWeight(Player player) {
         Event event = buildEvent(player);
         event.action = Action.checkStatus;
+        event.targets.add(new StringEntity("WEIGHT"));
+        return event;
+    }
+
+    public static Event checkInventory(Player player) {
+        Event event = buildEvent(player);
+        event.action = Action.checkInventory;
+        return event;
+    }
+
+    public static Event checkStatusWeapon(Player player) {
+        Event event = buildEvent(player);
+        event.action = Action.checkStatus;
+        event.targets.add(new StringEntity("WEAPON"));
         return event;
     }
 
@@ -41,6 +55,7 @@ public class EventHelper {
     public static Event guard(Player player) {
         Event event = buildEvent(player);
         event.action = Action.combatGuard;
+        event.priority=1;
         return event;
     }
 

@@ -78,9 +78,14 @@ public class PlayerService {
     }
 
 
-    public void playerInCombat(Player p) {
-        p.setCurrentState(State.combat);
+    public boolean playerInCombat(Player p) {
+        if(State.combat != p.getCurrentState()) {
+            p.setCurrentState(State.combat);
+            getPlayerQueue(p).getEventPriorityQueue().clear();
+            return true;
+        }
 
+        return false;
     }
 
 

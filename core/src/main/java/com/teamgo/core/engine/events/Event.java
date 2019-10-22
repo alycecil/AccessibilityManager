@@ -76,4 +76,16 @@ public class Event implements Comparable<Event> {
     public int hashCode() {
         return Objects.hash(getAction(), get__id());
     }
+
+
+    @Override
+    public String toString() {
+        return "Event{" +
+                "source=" + source +
+                ", targets=" + targets +
+                ", action=" + action +
+                ", priority=" + priority +
+                ", __id='" + __id + '\'' +
+                '}';
+    }
 }

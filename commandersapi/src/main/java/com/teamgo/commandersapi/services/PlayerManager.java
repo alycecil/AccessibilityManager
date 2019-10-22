@@ -7,6 +7,7 @@ import com.teamgo.core.engine.services.PlayerService;
 import com.teamgo.core.util.Expiring;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Set;
@@ -14,6 +15,9 @@ import java.util.function.BiConsumer;
 
 @Service
 public class PlayerManager {
+    @Autowired
+    EventManager eventManager;
+
     PlayerService playerService = new PlayerService();
     Logger LOGGER = LoggerFactory.getLogger(this.getClass());
 
@@ -51,7 +55,9 @@ public class PlayerManager {
         handleUpdate(p, playerUpdate.getWeight(), Player::setWeight);
 
         if (playerUpdate.isCombatWindowOpen()) {
-            playerService.playerInCombat(p);
+            if(playerService.playerInCombat(p)){
+                eventManager.completeCurrentJob(p, eventManager.getCurrentJob(p));
+            }
         } else if (playerUpdate.isExitedCombat()) {
             playerService.playerNotInCombat(p);
         }

@@ -18,8 +18,6 @@ public class UpdatePlayer {
         Player p = playerManager.identifyPlayer(playerName);
         playerUpdate.setName(playerName);
 
-        //TODO HANDLE
-
         playerManager.handleUpdate(p, playerUpdate);
 
         return p;

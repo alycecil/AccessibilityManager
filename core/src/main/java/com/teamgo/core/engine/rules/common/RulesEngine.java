@@ -37,29 +37,29 @@ public class RulesEngine {
 
     };
 
-    public RulesEngine(/*@Autowired*/ AutowireHelperRules autowireHelperRules){
+    public RulesEngine(/*@Autowired*/ AutowireHelperRules autowireHelperRules) {
         this.autowireHelperRules = autowireHelperRules;
     }
 
 
-    public List<Event> performStep(Player player){
+    public List<Event> performStep(Player player) {
         List<Event> results = new ArrayList<>();
-        if(State.combat.equals(player.getCurrentState())){
+        if (State.combat.equals(player.getCurrentState())) {
             doRules(results, combatRules, player);
 
-        }else{
+        } else {
             doRules(results, noncombatRules, player);
             doRules(results, combatStartingRules, player);
         }
 
-        return  results;
+        return results;
     }
 
     private void doRules(List<Event> results, Rule[] rules, Player player) {
-        if(!results.isEmpty()) return; //already got orders
+        if (!results.isEmpty()) return; //already got orders
 
-        if(rules==null) return;
-        if(rules.length==0) return;
+        if (rules == null) return;
+        if (rules.length == 0) return;
 
         for (Rule rule : rules) {
             doRule(results, rule, player);
@@ -71,17 +71,22 @@ public class RulesEngine {
     }
 
     private void doRule(List<Event> results, Rule rule, Player player) {
-        if(!results.isEmpty()) return; //already got orders
-        if(rule==null) return;
+        if (!results.isEmpty()) return; //already got orders
+        if (rule == null) return;
 
-        if(rule instanceof AutowiredRule){
+        if (rule instanceof AutowiredRule) {
             autowireHelperRules.autowire(rule);
         }
 
-        if(rule instanceof PlayerRule){
-            ((PlayerRule)rule).performRule(player);
-        }else{
-            rule.performRule(player);
+        List<Event> _r;
+        if (rule instanceof PlayerRule) {
+            _r = ((PlayerRule) rule).performRule(player);
+        } else {
+            _r = rule.performRule(player);
+        }
+
+        if(_r!=null && !_r.isEmpty()){
+            results.addAll(_r);
         }
 
     }

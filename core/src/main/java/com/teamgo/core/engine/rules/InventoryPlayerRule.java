@@ -17,16 +17,24 @@ public class InventoryPlayerRule implements Rule, PlayerRule {
     @Override
     public List<Event> performRule(Player player) {
         List<Event> result = new LinkedList<>();
-        if(player.getWeaponStatus().isExpired() || player.getWeight().isExpired()){
-            result.add(checkStatus(player));
-            //TODO result.add(checkInventory(player));
-        }else if(player.getWeaponStatus().getValue() < 41 || player.getWeight().getValue() > 80){
+        if(player.getWeight().isExpired()) {
+            result.add(checkStatusWeight(player));
+            result.add(checkInventory(player));
+        }
+//        else if(player.getWeaponStatus().isExpired()){
+//            result.add(checkStatusWeapon (player));
+//        }
+        else if(
+                //player.getWeaponStatus().getValue() < 41 ||
+                player.getWeight().getValue() >= 80){
 
             result.add(teleport(player, TeleportDestinations.AVALON));
             result.add(move(player, Direction.LEFT));
             result.add(repair(player));
             result.add(sell(player));
-            //TODO Sell Rules
+            result.add(move(player, Direction.UP));
+            result.add(move(player, Direction.UP));
+            result.add(move(player, Direction.UP));
         }
 
         return result;
